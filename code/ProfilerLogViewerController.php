@@ -19,6 +19,7 @@ class ProfilerLogViewerController extends ContentController {
 	 */
 	public function init() {
 		parent::init();
+		//TODO: Read from the session instead of a temp file.
 		include( getTempFolder( BASE_PATH . '-query-stats' ) . '/querystats.php' );
 		$this->rawdata = $logData;
 		foreach( $logData as $key => $data ) {
@@ -40,10 +41,10 @@ class ProfilerLogViewerController extends ContentController {
 	 *
 	 * @return array
 	 */
-	public function index( SS_HTTPRequest $request ) {
-		Requirements::javascript( 'https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js' );
+	public function index( SS_HTTPRequest $request = null ) {
+		Requirements::javascript( THIRDPARTY_DIR.'/jquery/jquery.min.js' );
+		Requirements::javascript( 'dbprofiler/js/jquery.tablesort.min.js' );
 		Requirements::javascript( 'dbprofiler/js/profiler.js' );
-		Requirements::javascript( 'dbprofiler/js/jquery.tablesorter.min.js' );
 		Requirements::css( 'dbprofiler/css/profiler.css' );
 		return array();
 	}
@@ -110,6 +111,33 @@ class ProfilerLogViewerController extends ContentController {
 	public function Backtrace( SS_HTTPRequest $request ) {
 		$dowantKey = $request->param( 'ID' );
 		echo $this->rawdata['Queries'][ $dowantKey ]['Backtrace'];
+	}
+	
+	public static function add_dashboard_panel(){
+		if(!class_exists('DeveloperDashboard')){
+			throw new Exception('add_dashboard_panel depends on DeveloperDashboard');
+		}
+		$plvc = new ProfilerLogViewerController();
+		$plvc->addDashboardPanel();
+	}
+	
+	/**
+	 * Called by the panel before it is displayed, adds the log data.
+	 * @param DashboardPanel $panel
+	 */
+	public function getPanelContent(DashboardPanel $panel){
+		$this->init();
+		$panel->addFormField(new LiteralField('ProfileRequestData', 
+				$this->renderWith('ProfileRequestData')));
+		$panel->addFormField(new LiteralField('ProfileQueryData', 
+				$this->renderWith('ProfileQueryData')));
+	}
+    
+	private function addDashboardPanel(){
+		$this->index(); //include requirements.
+		$panel = new DashboardPanel('Queries');
+		$panel->setFormContentCallback($this);
+		DeveloperDashboard::inst()->addPanel($panel);
 	}
 
 }

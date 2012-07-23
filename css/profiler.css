@@ -22,9 +22,9 @@ body {
 }
 
 #showonclickarea {
-	width: 1000px;
+	width: 800px;
 	position:fixed;
-	left:415px;
+	left:420px;
 	height:95%;
 	overflow:scroll;
 }
@@ -109,7 +109,7 @@ table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 }
 
 table.tablesorter thead tr .header {
-	background-image: url(/dbprofiler/images/bg.gif);
+	background-image: url(../images/bg.gif);
 	background-repeat: no-repeat;
 	background-position: center right;
 	cursor: pointer;
@@ -124,13 +124,13 @@ table.tablesorter tbody td {
 table.tablesorter tbody tr.odd td {
 	background-color:#F0F0F6;
 }
-table.tablesorter thead tr th.headerSortUp {
-	background-image: url(/profiler/images/asc.gif);
+table.tablesorter thead tr th.sorted.ascending {
+	background-image: url(../images/asc.gif);
 }
-table.tablesorter thead tr th.headerSortDown {
-	background-image: url(/profiler/images/desc.gif);
+table.tablesorter thead tr th.sorted.descending {
+	background-image: url(../images/desc.gif);
 }
-table.tablesorter thead tr th.headerSortDown, table.tablesorter thead tr th.headerSortUp {
+table.tablesorter thead tr th.sorted {
 	background-color: #8dbdd8;
 }
 

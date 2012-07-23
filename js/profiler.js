@@ -1,5 +1,5 @@
 jQuery(document).ready(function() {
- 	$("#profile-query-data").tablesorter();  
+ 	jQuery("#profile-query-data").tablesort();
 	
 	jQuery('a.showonclick').click(function() {
 		var id = this.id.replace( 'click-', '' );

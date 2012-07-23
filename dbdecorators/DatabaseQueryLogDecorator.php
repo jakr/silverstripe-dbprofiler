@@ -142,6 +142,7 @@ class DatabaseQueryLogDecorator implements DatabaseQueryExecutable {
 		self::$queries[ 'Timestamp' ] = date( 'Y-m-d H:i:s' );
 		self::$queries[ 'MemoryUsage' ] = number_format( (float) memory_get_peak_usage( true ) / ( 1024 * 1024 ), 2 );
 		self::$queries[ 'TotalSize' ] = number_format( self::$queries[ 'TotalSize' ] / 1024.00, 2);
+		//TODO: Store this in the session instead of a temp file.
 		file_put_contents( getTempFolder( BASE_PATH . '-query-stats' ) . '/querystats.php', '<?php $logData = ' . var_export( self::$queries, true ) . '; ?>' );
 
 		if( Director::is_ajax() ) {
