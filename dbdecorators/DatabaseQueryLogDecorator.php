@@ -135,7 +135,7 @@ class DatabaseQueryLogDecorator implements DatabaseQueryExecutable {
 	 * @return void
 	 */
 	public function __destruct() {
-		if( !isset( self::$queries[ 'Queries' ] ) ) {
+		if(!isset( self::$queries[ 'Queries' ] ) || class_exists('DeveloperDashboard')) {
 			return;
 		}
 		
