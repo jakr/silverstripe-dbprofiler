@@ -4,7 +4,8 @@
  *
  * @package dbprofiler
  */
-class ProfilerLogViewerController extends ContentController {
+require_once '../developer_dashboard/code/DashboardPanelContentProvider.php';
+class ProfilerLogViewerController extends ContentController implements DashboardPanelContentProvider {
 
 	/**
 	 *
@@ -136,7 +137,7 @@ class ProfilerLogViewerController extends ContentController {
 	private function addDashboardPanel(){
 		$this->index(); //include requirements.
 		$panel = new DashboardPanel('Queries');
-		$panel->setFormContentCallback($this);
+		$panel->setContentProvider($this);
 		DeveloperDashboard::inst()->addPanel($panel);
 	}
 
